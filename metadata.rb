@@ -18,3 +18,32 @@ chef_version '>= 14.0'
 # a Supermarket.
 #
 # source_url 'https://github.com/<insert_org_here>/mongodb_cookbook2'
+
+# recipe 'mongodb', 'Installs and configures a single node mongodb instance'
+# recipe 'mongodb::mongos', 'Installs and configures a mongos which can be used in a shared setup'
+
+# depends 'mongodb'
+depends 'apt'
+# depends 'yum'
+# depends 'python'
+
+
+# include_attribute 'mongodb/config/dbpath',
+#           :display_name => 'dbpath',
+#           :description => 'path to store the mongodb data',
+#           :default => '/var/lib/mongodb'
+#
+# include_attribute 'mongodb/reload_action',
+#           :display_name => 'reload_action',
+#           :description => 'action to take when mongodb config files are modified',
+#           :default => 'restart'
+#
+# include_attribute 'mongodb/package_version',
+#           :display_name => 'mongodb package version',
+#           :description => 'version of the mongodb package to install',
+#           :default => ''
+#
+# include_attribute 'mongodb/configfile',
+#           :display_name => 'configuration file',
+#           :description => 'name of configuration file to use when starting mongod/mongos vs command line options',
+#           :default => 'restart'
