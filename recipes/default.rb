@@ -4,21 +4,30 @@
 #
 # Copyright:: 2020, The Authors, All Rights Reserved.
 
+include_recipe 'apt'
+
 execute 'Retrive_key' do
-  command 'sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927'
+  command 'sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 4B7C549A058F8B6B'
   action :run
 end
 
 execute 'Create_list' do
-  command 'echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list'
+  command "echo 'deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse' | sudo tee /etc/apt/sources.list.d/mongodb.list"
   action :run
 end
 
-include_recipe 'apt'
-apt_update
+execute 'mongod_update_sourcelist' do
+  command "echo 'deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse' | sudo tee /etc/apt/sources.list.d/mongodb.list"
+  action :run
+end
+
+execute 'apt_update' do
+  command 'sudo apt-get update -y'
+  action :run
+end
 
 execute 'Specific_version_install' do
-  command 'sudo apt-get install -y mongodb-org=3.2.20 mongodb-org-server=3.2.20 mongodb-org-shell=3.2.20 mongodb-org-mongos=3.2.20 mongodb-org-tools=3.2.20'
+  command 'sudo apt install mongodb-org=4.2.1 mongodb-org-server=4.2.1 mongodb-org-shell=4.2.1 mongodb-org-mongos=4.2.1 mongodb-org-tools=4.2.1'
 end
 
 execute 'provision' do
